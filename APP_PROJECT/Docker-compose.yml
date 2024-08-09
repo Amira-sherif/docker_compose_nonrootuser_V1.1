@@ -1,0 +1,25 @@
+services:
+  web_app:
+    build: ./app_docker_compose
+    ports:
+      - "9999:5000"
+    networks:
+      - public  
+      - private
+    environment:
+      - MONGO_URI=mongodb://Database:27017/database
+  Database:
+    image: mongo:4.4
+    volumes:
+      - data_mongo:/data/db
+    networks:
+      - private
+networks:
+  public:
+    driver: bridge
+   
+  private:
+    driver: bridge
+    internal: true
+volumes:
+  data_mongo:
